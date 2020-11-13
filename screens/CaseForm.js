@@ -243,6 +243,7 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
           style={styles.formField}
           placeholder="Resident Name"
           onChangeText={(text) => setWorksiteValue('name', text)}
+          value={worksite.name}
         />
         <BaseInput
           style={styles.formField}
