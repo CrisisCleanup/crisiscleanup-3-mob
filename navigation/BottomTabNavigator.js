@@ -26,7 +26,7 @@ function CasesPagesNavigator({ navigation }) {
   return (
     <View style={{ height: '100%' }}>
       <SettingsScreenStack.Navigator
-        initialRouteName="CaseList"
+        initialRouteName="Cases"
         screenOptions={screenOptions}
       >
         <SettingsScreenStack.Screen

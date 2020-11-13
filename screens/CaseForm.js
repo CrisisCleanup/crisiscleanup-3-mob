@@ -23,9 +23,7 @@ import { getErrorMessage } from '../utils/errors';
 
 const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   const win = Dimensions.get('window');
-  const [worksite, setWorksite] = React.useState({
-    dynamicFields: {},
-  });
+  const [worksite, setWorksite] = React.useState(route.params.worksite);
   const [fieldTree, setFieldTree] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const setWorksiteValue = (key, value) => {

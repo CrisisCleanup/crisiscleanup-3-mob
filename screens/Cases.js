@@ -212,7 +212,7 @@ export default function Cases({ navigation }) {
             <Map worksites={worksites} />
           </View>
         )}
-        {showingList && <CaseList worksites={worksites} />}
+        {showingList && <CaseList worksites={worksites} navigation={navigation} />}
       </View>
     </View>
   );

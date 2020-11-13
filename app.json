@@ -3,7 +3,11 @@
     "name": "Crisiscleanup",
     "slug": "crisiscleanup.org",
     "sdkVersion": "37.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,12 +19,16 @@
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["svg"]
+      "sourceExts": [
+        "svg"
+      ]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     }
