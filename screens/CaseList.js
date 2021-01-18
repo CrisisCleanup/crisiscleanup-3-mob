@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native-tailwind';
 import { templates, colors } from '../icon_templates';
 import { SvgCss } from 'react-native-svg';
 import MarkerIcon from '../assets/images/marker.svg';
+import {getWorksite} from '../api/worksites.js'
 import DebugMessageBox from 'react-native-webview-leaflet/DebugMessageBox';
 
 export default function CaseList(props) {
@@ -43,8 +44,16 @@ export default function CaseList(props) {
         <View className="bg-white my-1" key={item.id}>
           <TouchableOpacity
           onPress={() => {
-            navigation.navigate('CaseForm', {
-              worksite: item
+            var sitePromise = getWorksite(item.id);
+            sitePromise.then(function(worksite) {
+              
+              navigation.navigate('EditCaseForm', {
+                worksite: worksite,
+                incident: props.incident
+              });
+            },
+            function failedToLoadWorksite(error) {
+              throw "Encountered error trying to load item. Error details: " + error;
             });
         }}>
             <View className="flex-1">
@@ -98,6 +107,7 @@ export default function CaseList(props) {
     
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

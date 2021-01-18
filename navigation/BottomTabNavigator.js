@@ -16,7 +16,7 @@ const SettingsScreenStack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
 function CasesPagesNavigator({ navigation }) {
-  navigation.setOptions({ headerTitle: null });
+  //navigation.setOptions({ headerTitle: null });
   let screenOptions = {
     cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
   };
@@ -38,10 +38,21 @@ function CasesPagesNavigator({ navigation }) {
           }}
         />
         <SettingsScreenStack.Screen
-          name="CaseForm"
+          name="NewCaseForm"
           component={CaseForm}
           options={{
             title: 'New Case',
+            headerShown: true,
+            headerRightContainerStyle: {
+              marginRight: 10,
+            },
+          }}
+        />
+        <SettingsScreenStack.Screen
+          name="EditCaseForm"
+          component={CaseForm}
+          options={{
+            title: 'Edit Case',
             headerShown: true,
             headerRightContainerStyle: {
               marginRight: 10,

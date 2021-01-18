@@ -95,8 +95,9 @@ export default function Cases({ navigation }) {
           zIndex: 1000,
         }}
         onPress={() => {
-          navigation.navigate('CaseForm', {
-            incident,
+          navigation.navigate('NewCaseForm', {
+            worksite: {},
+            incident
           });
         }}
       >
@@ -212,7 +213,7 @@ export default function Cases({ navigation }) {
             <Map worksites={worksites} />
           </View>
         )}
-        {showingList && <CaseList worksites={worksites} navigation={navigation} />}
+        {showingList && <CaseList worksites={worksites} incident={incident} navigation={navigation} />}
       </View>
     </View>
   );

@@ -42,4 +42,17 @@ const updateWorksite = async (worksite) => {
   return respone.data;
 };
 
-export { searchWorksites, createWorksite, updateWorksite };
+const getWorksite = async (id) => {
+  const accessToken = await AsyncStorage.getItem('@accessToken');
+  const respone = await axios.get(
+    `https://api.dev.crisiscleanup.io/worksites/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+  return respone.data;
+};
+
+export { searchWorksites, createWorksite, updateWorksite, getWorksite };

@@ -20,6 +20,7 @@ import FormTree from '../components/FormTree';
 import { createWorksite, updateWorksite } from '../api/worksites';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { getErrorMessage } from '../utils/errors';
+import { HeaderTitle } from '@react-navigation/stack';
 
 const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   const win = Dimensions.get('window');
@@ -62,6 +63,12 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
       };
     }, {});
   };
+
+  if(!worksite)
+  {
+    worksite = setWorksite({});
+  }
+  worksite.dynamicFields = getDyanamicFields(worksite);
 
   React.useEffect(() => {
     function fieldTree() {
