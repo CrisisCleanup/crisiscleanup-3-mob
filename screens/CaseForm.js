@@ -52,6 +52,7 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   };
 
   const getDyanamicFields = (worksite) => {
+    debugger;
     if (!worksite.form_data) {
       return {};
     }
@@ -68,7 +69,11 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   {
     worksite = setWorksite({});
   }
-  worksite.dynamicFields = getDyanamicFields(worksite);
+
+  if(!worksite.dynamicFields)
+  {
+    worksite.dynamicFields = getDyanamicFields(worksite);
+  }
 
   React.useEffect(() => {
     function fieldTree() {
