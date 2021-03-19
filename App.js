@@ -10,7 +10,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Login from './screens/Login';
 import { Ionicons } from '@expo/vector-icons';
 import { getMe } from './api/user';
