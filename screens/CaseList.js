@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { SafeAreaView, FlatList, StyleSheet } from 'react-native';
-import { View, Text } from 'react-native-tailwind';
+import { View, Text, TouchableOpacity } from 'react-native-tailwind';
 import { templates, colors } from '../icon_templates';
 import { SvgCss } from 'react-native-svg';
 import MarkerIcon from '../assets/images/marker.svg';
+import {getWorksite} from '../api/worksites.js'
+import DebugMessageBox from 'react-native-webview-leaflet/DebugMessageBox';
 
 export default function CaseList(props) {
   const getWorkTypeImage = (workType) => {
@@ -36,43 +38,58 @@ export default function CaseList(props) {
     return null;
   };
 
-  function getRenderItem() {
-    return ({ item }) => {
+  function getRenderItem(navigation) {
+    return ({item}) => {
       return (
         <View className="bg-white my-1" key={item.id}>
-          <View className="flex-1">
-            <View className="flex-1 flex-row items-center p-2 border-b border-gray-300">
-              <Text className="font-bold text-xl mr-3">{item.case_number}</Text>
-              {item.work_types.length && (
-                <View className="flex-1 flex-row">
-                  {item.work_types.map((wt) => (
-                    <View
-                      className="px-2 py-1 rounded-full mx-1"
-                      style={{
-                        backgroundColor:
-                          getWorkTypeColors(wt) &&
-                          `${getWorkTypeColors(wt).fillColor}3D`,
-                      }}
-                    >
-                      <SvgCss
-                        width="25"
-                        height="25"
-                        xml={getWorkTypeImage(wt)}
-                      />
-                    </View>
-                  ))}
-                </View>
-              )}
+          <TouchableOpacity
+          onPress={() => {
+            var sitePromise = getWorksite(item.id);
+            sitePromise.then(function(worksite) {
+              
+              navigation.navigate('EditCaseForm', {
+                worksite: worksite,
+                incident: props.incident
+              });
+            },
+            function failedToLoadWorksite(error) {
+              throw "Encountered error trying to load item. Error details: " + error;
+            });
+        }}>
+            <View className="flex-1">
+              <View className="flex-1 flex-row items-center p-2 border-b border-gray-300">
+                <Text className="font-bold text-xl mr-3">{item.case_number}</Text>
+                {item.work_types.length && (
+                  <View className="flex-1 flex-row">
+                    {item.work_types.map((wt) => (
+                      <View
+                        className="px-2 py-1 rounded-full mx-1"
+                        style={{
+                          backgroundColor:
+                            getWorkTypeColors(wt) &&
+                            `${getWorkTypeColors(wt).fillColor}3D`,
+                        }}
+                      >
+                        <SvgCss
+                          width="25"
+                          height="25"
+                          xml={getWorkTypeImage(wt)}
+                        />
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+              <View className="flex flex-row items-center px-2">
+                <MarkerIcon/>
+                <Text style={styles.item}>{item.name}</Text>
+              </View>
+              <View className="flex flex-row items-center px-2">
+                <MarkerIcon/>
+                <Text style={styles.item}>{item.address}</Text>
+              </View>
             </View>
-            <View className="flex flex-row items-center px-2">
-              <MarkerIcon/>
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-            <View className="flex flex-row items-center px-2">
-              <MarkerIcon/>
-              <Text style={styles.item}>{item.address}</Text>
-            </View>
-          </View>
+          </TouchableOpacity>
         </View>
       );
     };
@@ -81,14 +98,16 @@ export default function CaseList(props) {
   return (
     <FlatList
       data={props.worksites}
-      renderItem={getRenderItem()}
+      renderItem={getRenderItem(props.navigation)}
       initialNumToRender={5}
       removeClippedSubviews={true}
       windowSize={10}
       keyExtractor={(item) => String(item.id)}
     />
+    
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

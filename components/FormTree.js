@@ -116,6 +116,8 @@ export default function FormTree(props) {
       );
     }
     if (field.html_type === 'text') {
+      //undefined needs to be replaced with empty string
+      if(!field.value) field.value = "";
       return (
         <BaseInput
           style={styles.formField}

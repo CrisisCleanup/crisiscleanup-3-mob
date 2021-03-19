@@ -20,12 +20,11 @@ import FormTree from '../components/FormTree';
 import { createWorksite, updateWorksite } from '../api/worksites';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { getErrorMessage } from '../utils/errors';
+import { HeaderTitle } from '@react-navigation/stack';
 
 const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   const win = Dimensions.get('window');
-  const [worksite, setWorksite] = React.useState({
-    dynamicFields: {},
-  });
+  const [worksite, setWorksite] = React.useState(route.params.worksite);
   const [fieldTree, setFieldTree] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const setWorksiteValue = (key, value) => {
@@ -53,6 +52,7 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
   };
 
   const getDyanamicFields = (worksite) => {
+    debugger;
     if (!worksite.form_data) {
       return {};
     }
@@ -64,6 +64,16 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
       };
     }, {});
   };
+
+  if(!worksite)
+  {
+    worksite = setWorksite({});
+  }
+
+  if(!worksite.dynamicFields)
+  {
+    worksite.dynamicFields = getDyanamicFields(worksite);
+  }
 
   React.useEffect(() => {
     function fieldTree() {
@@ -245,6 +255,7 @@ const CaseForm = ({ route, navigation, showActionSheetWithOptions }) => {
           style={styles.formField}
           placeholder="Resident Name"
           onChangeText={(text) => setWorksiteValue('name', text)}
+          value={worksite.name}
         />
         <BaseInput
           style={styles.formField}
