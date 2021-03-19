@@ -57,17 +57,21 @@ export default function Cases({ navigation }) {
     }
     async function loadWorksites() {
       try {
-        const response = await axios.get(
-          `https://api.dev.crisiscleanup.io/worksites_all`,
-          {
-            params: { incident: incidentStore.incident },
-            headers: {
-              Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+        if(!isNaN(Number(incidentStore.incident)))
+        {
+          debugger;
+          const response = await axios.get(
+            `https://api.dev.crisiscleanup.io/worksites_all`,
+            {
+              params: { incident: incidentStore.incident },
+              headers: {
+                Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+              },
             },
-          },
-        );
+          );
 
-        setWorksites(response.data.results);
+          setWorksites(response.data.results);
+        }
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
