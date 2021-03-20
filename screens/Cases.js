@@ -52,7 +52,7 @@ export default function Cases({ navigation }) {
 
           console.log(incidentIcon.default);
           setIncidentIcon(incidentIcon.default);
-        } 
+        }
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
