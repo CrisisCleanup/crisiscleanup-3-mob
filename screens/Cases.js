@@ -33,23 +33,26 @@ export default function Cases({ navigation }) {
   React.useEffect(() => {
     async function loadIncident() {
       try {
-        const response = await axios.get(
-          `https://api.dev.crisiscleanup.io/incidents/${incidentStore.incident}`,
-          {
-            headers: {
-              Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+        if(!isNaN(Number(incidentStore.incident)))
+        {
+          const response = await axios.get(
+            `https://api.dev.crisiscleanup.io/incidents/${incidentStore.incident}`,
+            {
+              headers: {
+                Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+              },
             },
-          },
-        );
+          );
 
-        setIncident(response.data);
-        const incidentKey = response.data.incident_type.replace('_', '-');
-        console.log(incidentKey);
-        const url = `../assets/disaster_icons/${incidentKey}.svg`;
-        const incidentIcon = await import('../assets/disaster_icons/virus.svg');
+          setIncident(response.data);
+          const incidentKey = response.data.incident_type.replace('_', '-');
+          console.log(incidentKey);
+          const url = `../assets/disaster_icons/${incidentKey}.svg`;
+          const incidentIcon = await import('../assets/disaster_icons/virus.svg');
 
-        console.log(incidentIcon.default);
-        setIncidentIcon(incidentIcon.default);
+          console.log(incidentIcon.default);
+          setIncidentIcon(incidentIcon.default);
+        }
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
@@ -57,17 +60,20 @@ export default function Cases({ navigation }) {
     }
     async function loadWorksites() {
       try {
-        const response = await axios.get(
-          `https://api.dev.crisiscleanup.io/worksites_all`,
-          {
-            params: { incident: incidentStore.incident },
-            headers: {
-              Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+        if(!isNaN(Number(incidentStore.incident)))
+        {
+          const response = await axios.get(
+            `https://api.dev.crisiscleanup.io/worksites_all`,
+            {
+              params: { incident: incidentStore.incident },
+              headers: {
+                Authorization: 'Token 9455d55d653337cabf31942083e5a537b7f8189a',
+              },
             },
-          },
-        );
+          );
 
-        setWorksites(response.data.results);
+          setWorksites(response.data.results);
+        }
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
